@@ -1,7 +1,7 @@
 #!/bin/bash
 IF="eth0"
 apt update -y
-apt install hping3 python3-pip bmon -y
+apt install hping3 python3-pip bmon wrk siege -y
 pip3 install locust==2.15.0 --break-system-packages
 pip3 install itsdangerous==2.0.1 --break-system-packages
 pip3 install werkzeug==2.0.3 --break-system-packages
