@@ -10,8 +10,13 @@ pip install redis==5.0.0 --break-system-packages
 
 curl https://raw.githubusercontent.com/sazakan/slowloris/master/slowloris.py -o /root/slowloris.py
 
-# ./traffic_shaper.sh [ip_address] [MB/s]
+# TRAFFIC SHAPER SCRIPT
+cat <<EOF > /root/traffic_shaper.sh
+#!/bin/bash
+TC=/sbin/tc
+IF="$IF"
 
+# ./traffic_shaper.sh [ip_address] [MB/s]
 U32="\$TC filter add dev \$IF protocol ip parent 1:0 prio 1 u32"
 
 start() {
@@ -48,31 +53,6 @@ exit 0
 EOF
 
 chmod +x /root/traffic_shaper.sh
-
-
-if ! command -v hping3 &> /dev/null
-then
-        apt update -y
-        apt install hping3 python3-pip -y
-fi
-
-if ! command -v locust &> /dev/null
-then
-        pip3 install locust==1.5.3
-fi
-
-
-if ! command -v hping3 &> /dev/null
-then
-        touch /tmp/SETUP_FAIL
-        exit
-fi
-
-if ! command -v locust &> /dev/null
-then
-        touch /tmp/SETUP_FAIL
-        exit
-fi
 
 touch /tmp/SETUP_OK
 
