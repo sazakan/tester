@@ -74,7 +74,7 @@ def process_message(message):
 async def client():
     while True:
         try:
-            async with websockets.connect("ws://$WSERVER_ADDR:WSERVER_PORT") as websocket:
+            async with websockets.connect("ws://$WSERVER_ADDR:$WSERVER_PORT") as websocket:
                 async for message in websocket:
                     t = threading.Thread(target=process_message, args=(message,))
                     t.start()
