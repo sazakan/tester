@@ -56,9 +56,6 @@ chmod +x /root/traffic_shaper.sh
 
 touch /tmp/SETUP_OK
 
-SERVER_PORT="8765"
-SERVER_ADDR="165.227.111.141"
-
 cat <<EOF > /root/wsclient.py
 import asyncio
 import websockets
@@ -77,7 +74,7 @@ def process_message(message):
 async def client():
     while True:
         try:
-            async with websockets.connect("ws://165.227.111.141:8765") as websocket:
+            async with websockets.connect("ws://$WSERVER_ADDR:WSERVER_PORT") as websocket:
                 async for message in websocket:
                     t = threading.Thread(target=process_message, args=(message,))
                     t.start()
