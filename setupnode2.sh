@@ -1,4 +1,8 @@
 #!/bin/bash
+
+WSERVER_ADDR=$1
+WSERVER_PORT=8765
+
 IF="eth0"
 apt update -y
 apt install hping3 python3-pip bmon python3-websockets wrk siege slowhttptest apache2-utils -y
